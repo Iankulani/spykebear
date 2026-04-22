@@ -29,3 +29,186 @@ In addition to its technical capabilities, Spyk3 Bear fosters collaboration. Tea
 Spyk3 Bear is not just a tool—it is a platform for innovation, training, and exploration in the cybersecurity space. By combining command-based control, multi-platform integration, simulation capabilities, and social engineering modules, it provides a comprehensive solution for modern cyber challenges.
 
 Whether used in cyber drills, academic research, simulation environments, or advanced experimentation, Spyk3 Bear equips users with the tools they need to understand, test, and strengthen digital security systems. Its adaptability, power, and global accessibility make it a valuable asset in the ever-evolving landscape of cybersecurity.
+
+# How to clone and run the repo
+
+```bash
+git clone https://github.com/Iankulani/spykebear.git
+```
+
+```bash
+cd spykebear
+``` 
+
+
+# Using nano
+```bash
+nano spykebear.py
+```
+# Using vim
+
+```bash
+vim spykebear.py
+```
+# Or any text editor
+```bash
+code spykebear.py
+```
+# Step 2: Make it executable (Linux/macOS)
+```bash
+chmod +x spykebear.py
+```
+# Step 3: Install dependencies
+```bash
+# Install required packages
+```bash
+pip install -r requirements.txt
+```
+# Or install manually
+```bash
+pip install requests psutil cryptography paramiko scapy python-whois qrcode pyshorteners colorama flask flask-socketio python-socketio eventlet sqlalchemy discord.py telethon slack-sdk selenium webdriver-manager dnspython netifaces geoip2 beautifulsoup4 lxml
+
+Step 4: Run the application
+# Run directly
+```bash
+python3 spykebear.py
+```
+
+# Or as executable
+./spykebear.py
+
+# With sudo for full features (spoofing, packet capture)
+```bash
+sudo python3 spykebear.py
+```
+
+# 📦 Installation Methods
+Method 1: Direct Run (Quickest)
+bash
+# Save the file and run
+```bash
+python3 spykebear.py
+```
+
+Method 2: Using the installer scripts
+Linux/macOS:
+
+bash
+chmod +x install.sh
+./install.sh
+Windows:
+
+cmd
+install.bat
+PowerShell (as Admin):
+
+powershell
+```bash
+Set-ExecutionPolicy Bypass -Scope Process -Force
+./install.ps1
+```
+Method 3: Docker
+# Build and run with Docker
+```bash
+docker build -t spykebear .
+docker run --privileged --network host -p 8080:8080 spykebear
+```bash
+
+# Method 4: Docker Compose
+```bash
+docker-compose up -d
+```
+# Method 5: Python Package
+
+# Install as package
+```bash
+python setup.py install
+```
+# Or in development mode
+pip install -e .
+
+# Then run
+```bash
+spykebear
+```
+
+🔧 Platform-Specific Instructions
+Ubuntu/Debian Linux
+bash
+# Install system dependencies
+```bash
+sudo apt update
+sudo apt install -y python3 python3-pip nmap tcpdump net-tools curl wget netcat-openbsd whois dnsutils hping3 macchanger arp-scan dsniff
+```
+# Install Python packages
+```bash
+pip3 install -r requirements.txt
+```
+# Run
+```bash
+sudo python3 spykebear.py
+```
+      
+macOS
+```bash
+# Install Homebrew if not installed
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```    
+
+# Install dependencies
+```bash
+brew install python3 nmap tcpdump net-tools coreutils curl wget netcat whois bind hping3 macchanger arp-scan dsniff
+```
+# Install Python packages
+```bash
+pip3 install -r requirements.txt
+```
+# Run
+```bash
+python3 spykebear.py
+```
+Windows
+powershell
+# Install Python from python.org first, then:
+
+# Open PowerShell as Administrator
+```bash
+Set-ExecutionPolicy Bypass -Scope Process -Force
+```
+# Install Python packages
+```bash
+pip install -r requirements.txt
+```
+# Run
+
+```bash
+python spykebear.py
+```
+
+🐳 Docker Quick Commands
+
+# Build image
+docker build -t spykebear:latest .
+
+# Run container
+```bash
+docker run -it --privileged --network host -p 8080:8080 spykebear:latest
+```
+# Run in background
+```bash
+docker run -d --privileged --network host -p 8080:8080 --name spykebear spykebear:latest
+```
+# Stop container
+```bash
+docker stop spykebear
+```
+# View logs
+```bash
+docker logs spykebear
+```
+# Using Docker Compose
+```bash
+docker-compose up -d
+docker-compose logs -f
+docker-compose down
+```
