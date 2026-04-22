@@ -1,0 +1,68 @@
+# Multi-stage build for SPYKE BEAR
+FROM alpine:3.19 AS builder
+
+# Install build dependencies
+RUN apk add --no-cache \
+    python3 py3-pip python3-dev \
+    gcc musl-dev linux-headers \
+    libffi-dev openssl-dev \
+    tcpdump nmap nmap-scripts \
+    curl wget netcat-openbsd \
+    bind-tools whois \
+    hping3 macchanger \
+    arp-scan dsniff \
+    git make cmake
+
+# Set working directory
+WORKDIR /app
+
+# Copy requirements first for better caching
+COPY requirements.txt .
+
+# Install Python packages
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Final stage
+FROM alpine:3.19
+
+# Install runtime dependencies
+RUN apk add --no-cache \
+    python3 \
+    tcpdump nmap nmap-scripts \
+    curl wget netcat-openbsd \
+    bind-tools whois \
+    hping3 macchanger \
+    arp-scan dsniff \
+    sudo bash \
+    chromium chromium-chromedriver \
+    py3-pip
+
+# Create spykebear user
+RUN adduser -D -h /home/spykebear spykebear && \
+    echo "spykebear ALL=(ALL) NOPASSWD: /usr/sbin/iptables, /usr/sbin/arpspoof, /usr/sbin/dnsspoof, /usr/sbin/macchanger" >> /etc/sudoers
+
+# Copy application
+WORKDIR /app
+COPY --from=builder /usr/lib/python3.11/site-packages /usr/lib/python3.11/site-packages
+COPY --from=builder /app /app
+COPY . .
+
+# Create necessary directories
+RUN mkdir -p /home/spykebear/.spykebear && \
+    chown -R spykebear:spykebear /app /home/spykebear/.spykebear
+
+# Set permissions
+RUN chmod +x spykebear.py
+
+# Switch to spykebear user
+USER spykebear
+
+# Expose ports
+EXPOSE 8080 8443
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8080/ || exit 1
+
+# Run the application
+ENTRYPOINT ["python3", "spykebear.py"]

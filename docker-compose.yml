@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  spykebear:
+    build: .
+    container_name: spykebear
+    hostname: spykebear
+    restart: unless-stopped
+    privileged: true  # Required for network operations
+    network_mode: host  # For full network access
+    volumes:
+      - spykebear_data:/home/spykebear/.spykebear
+      - spykebear_reports:/app/reports
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - TZ=UTC
+      - PYTHONUNBUFFERED=1
+      - SPYKEBEAR_MODE=production
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+      - SYS_ADMIN
+      - SYS_PTRACE
+    security_opt:
+      - apparmor:unconfined
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - spykebear_net
+
+  # Optional: PostgreSQL for production database
+  postgres:
+    image: postgres:15-alpine
+    container_name: spykebear_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: spykebear
+      POSTGRES_USER: spykebear
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-changeme}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - spykebear_net
+    profiles:
+      - full
+
+  # Optional: Redis for caching
+  redis:
+    image: redis:7-alpine
+    container_name: spykebear_redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    networks:
+      - spykebear_net
+    profiles:
+      - full
+
+volumes:
+  spykebear_data:
+  spykebear_reports:
+  postgres_data:
+  redis_data:
+
+networks:
+  spykebear_net:
+    driver: bridge

@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  spykebear-alpine:
+    build:
+      context: .
+      dockerfile: Dockerfile.alpine
+    container_name: spykebear-alpine
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+    volumes:
+      - spykebear_data:/home/spykebear/.spykebear
+      - spykebear_reports:/home/spykebear/reports
+    environment:
+      - TZ=UTC
+      - PYTHONUNBUFFERED=1
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    ports:
+      - "8080:8080"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  spykebear_data:
+  spykebear_reports:

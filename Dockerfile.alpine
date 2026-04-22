@@ -1,0 +1,60 @@
+# SPYKE BEAR - Minimal Alpine Docker Image
+FROM alpine:3.19
+
+LABEL maintainer="Spyke Bear Team"
+LABEL description="Cybersecurity Command Center"
+LABEL version="1.0.0"
+
+# Install system dependencies
+RUN apk add --no-cache \
+    python3 py3-pip \
+    tcpdump nmap nmap-scripts \
+    curl wget netcat-openbsd \
+    bind-tools whois \
+    hping3 macchanger \
+    arp-scan dsniff \
+    sudo bash \
+    py3-cryptography \
+    py3-paramiko \
+    py3-requests \
+    py3-psutil \
+    py3-colorama
+
+# Install Python packages
+RUN pip3 install --no-cache-dir \
+    scapy \
+    python-whois \
+    qrcode \
+    pyshorteners \
+    flask \
+    flask-socketio \
+    python-socketio \
+    eventlet \
+    sqlalchemy \
+    discord.py \
+    telethon \
+    slack-sdk \
+    dnspython \
+    netifaces \
+    geoip2
+
+# Create user and directories
+RUN adduser -D -h /home/spykebear spykebear && \
+    mkdir -p /home/spykebear/.spykebear && \
+    chown -R spykebear:spykebear /home/spykebear
+
+WORKDIR /home/spykebear
+
+# Copy application
+COPY --chown=spykebear:spykebear spykebear.py .
+COPY --chown=spykebear:spykebear requirements.txt .
+
+# Set permissions
+RUN chmod +x spykebear.py
+
+# Switch to non-root user
+USER spykebear
+
+EXPOSE 8080
+
+CMD ["python3", "spykebear.py"]
