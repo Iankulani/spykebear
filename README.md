@@ -212,3 +212,5 @@ docker-compose up -d
 docker-compose logs -f
 docker-compose down
 ```
+# Star History
+[![Star History Chart](https://api.star-history.com/svg?repos=Iankulani/spykebear&type=Date)](https://star-history.com/#Iankulani/spykebear&Date)
