@@ -75,8 +75,9 @@ python3 spykebear.py
 ```
 
 # Or as executable
+```bash
 ./spykebear.py
-
+```
 # With sudo for full features (spoofing, packet capture)
 ```bash
 sudo python3 spykebear.py
@@ -84,8 +85,9 @@ sudo python3 spykebear.py
 
 # 📦 Installation Methods
 Method 1: Direct Run (Quickest)
-bash
+
 # Save the file and run
+
 ```bash
 python3 spykebear.py
 ```
@@ -93,10 +95,11 @@ python3 spykebear.py
 Method 2: Using the installer scripts
 Linux/macOS:
 
-bash
+```bash
 chmod +x install.sh
 ./install.sh
-Windows:
+```
+
 
 cmd
 install.bat
@@ -125,8 +128,9 @@ docker-compose up -d
 python setup.py install
 ```
 # Or in development mode
+```bash
 pip install -e .
-
+```
 # Then run
 ```bash
 spykebear
