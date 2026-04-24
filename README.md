@@ -67,8 +67,8 @@ pip install -r requirements.txt
 # Or install manually
 ```bash
 pip install requests psutil cryptography paramiko scapy python-whois qrcode pyshorteners colorama flask flask-socketio python-socketio eventlet sqlalchemy discord.py telethon slack-sdk selenium webdriver-manager dnspython netifaces geoip2 beautifulsoup4 lxml
-
-Step 4: Run the application
+```
+# Step 4: Run the application
 # Run directly
 ```bash
 python3 spykebear.py
@@ -92,7 +92,7 @@ Method 1: Direct Run (Quickest)
 python3 spykebear.py
 ```
 
-Method 2: Using the installer scripts
+# Method 2: Using the installer scripts
 Linux/macOS:
 
 ```bash
